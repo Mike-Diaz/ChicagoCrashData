@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Chicago Traffic App</title>
+</head>
+<body>
+    <a href="jQueryMobileIndex.html">jQuery Mobile Version</a>
+
+    <!------------------------------------------------------------------------>
+    <!--QUERY 1                                                              -->
+    <!------------------------------------------------------------------------>
+    <div>
+        <h2>Query 1: Accidents by Injury</h2>
+
+        <!--This is the combobox-->
+        <h3>Select type of injury to filter results.</h3>
+        <div id='htmlCBoxInjury'></div>
+        <input type="button" value="Filter Injury" onclick="filterInjury();" /><br />
+
+        <div id="Quer1MainTable">
+            <ul id="crashTable" />
+        </div>
+    </div>
+
+    <!------------------------------------------------------------------------>
+    <!--QUERY 2                                                             -->
+    <!------------------------------------------------------------------------>
+    <div>
+        <h2>Query 2: Accidents by Primary Cause</h2>
+
+        <div>
+            <!--This is the combobox-->
+            <div id='htmlCBoxPrimeCause'></div>
+        </div>
+        <div>
+            <!--Submit the query-->
+            <input type="button" value="Filter Accidents" onclick="filterPrimaryCause()" /><br />
+        </div>
+        <div id="Query2MainTable">
+            <ul id="query2Table" />
+        </div>
+    </div>
+
+    <!------------------------------------------------------------------------>
+    <!--QUERY 3                                                             -->
+    <!------------------------------------------------------------------------>
+    <div>
+        <h2>Query 3: Accidents by Age and Sex</h2>
+
+        <!---------------------------->
+        <!--Choose Sex              -->
+        <!---------------------------->
+        <h2>Sex:</h2>
+        <form>
+            <input type="radio" id="male" name="chooseone" value="M"><label for="Male"> Male</label><br>
+            <input type="radio" id="female" name="chooseone" value="F"><label for="Female"> Female</label><br>
+            <input type="radio" id="unknown" name="chooseone" value="U"><label for="Unknown"> Unknown</label><br>
+        </form>
+
+        <div>
+            <h3>Min Age</h3>
+            <select class="1-100" id="minAge"></select>
+            <h3>Max Age</h3>
+            <select class="1-100" id="maxAge"></select>
+        </div>
+
+        <div>
+            <!--Submit the query-->
+            <input type="button" value="Filter Age/Sex" onclick="filterAgeSex();" /><br />
+        </div>
+
+        <div id="Query3MainTable">
+            <ul id="query3Table" />
+        </div>
+
+
+    </div>
+
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <script src="MyScript.js"></script>
+</body>
+
+</html>

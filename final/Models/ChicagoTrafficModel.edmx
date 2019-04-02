@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ChicagoTrafficModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CrashReport">
+          <Key>
+            <PropertyRef Name="RD_NO" />
+          </Key>
+          <Property Name="RD_NO" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="CrashDate" Type="datetime" />
+          <Property Name="PrimeContributingCause" Type="nvarchar" MaxLength="100" />
+          <Property Name="MostSevereInjury" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="CrashReportPeople">
+          <Key>
+            <PropertyRef Name="PersonID" />
+          </Key>
+          <Property Name="PersonID" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="RD_NO" Type="nvarchar" MaxLength="25" />
+          <Property Name="PersonType" Type="nvarchar" MaxLength="25" />
+          <Property Name="Age" Type="int" />
+          <Property Name="Sex" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK_CrashPeople_CrashReports">
+          <End Role="CrashReport" Type="Self.CrashReport" Multiplicity="0..1" />
+          <End Role="CrashReportPeople" Type="Self.CrashReportPeople" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CrashReport">
+              <PropertyRef Name="RD_NO" />
+            </Principal>
+            <Dependent Role="CrashReportPeople">
+              <PropertyRef Name="RD_NO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ChicagoTrafficModelStoreContainer">
+          <EntitySet Name="CrashReport" EntityType="Self.CrashReport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CrashReportPeople" EntityType="Self.CrashReportPeople" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CrashPeople_CrashReports" Association="Self.FK_CrashPeople_CrashReports">
+            <End Role="CrashReport" EntitySet="CrashReport" />
+            <End Role="CrashReportPeople" EntitySet="CrashReportPeople" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ChicagoTrafficModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CrashReport">
+          <Key>
+            <PropertyRef Name="RD_NO" />
+          </Key>
+          <Property Name="RD_NO" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CrashDate" Type="DateTime" Precision="3" />
+          <Property Name="PrimeContributingCause" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MostSevereInjury" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CrashReportPeoples" Relationship="Self.FK_CrashPeople_CrashReports" FromRole="CrashReport" ToRole="CrashReportPeople" />
+        </EntityType>
+        <EntityType Name="CrashReportPeople">
+          <Key>
+            <PropertyRef Name="PersonID" />
+          </Key>
+          <Property Name="PersonID" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RD_NO" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="PersonType" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="Sex" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CrashReport" Relationship="Self.FK_CrashPeople_CrashReports" FromRole="CrashReportPeople" ToRole="CrashReport" />
+        </EntityType>
+        <Association Name="FK_CrashPeople_CrashReports">
+          <End Role="CrashReport" Type="Self.CrashReport" Multiplicity="0..1" />
+          <End Role="CrashReportPeople" Type="Self.CrashReportPeople" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CrashReport">
+              <PropertyRef Name="RD_NO" />
+            </Principal>
+            <Dependent Role="CrashReportPeople">
+              <PropertyRef Name="RD_NO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ChicagoTrafficEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CrashReports" EntityType="Self.CrashReport" />
+          <EntitySet Name="CrashReportPeoples" EntityType="Self.CrashReportPeople" />
+          <AssociationSet Name="FK_CrashPeople_CrashReports" Association="Self.FK_CrashPeople_CrashReports">
+            <End Role="CrashReport" EntitySet="CrashReports" />
+            <End Role="CrashReportPeople" EntitySet="CrashReportPeoples" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ChicagoTrafficModelStoreContainer" CdmEntityContainer="ChicagoTrafficEntities">
+          <EntitySetMapping Name="CrashReports">
+            <EntityTypeMapping TypeName="ChicagoTrafficModel.CrashReport">
+              <MappingFragment StoreEntitySet="CrashReport">
+                <ScalarProperty Name="RD_NO" ColumnName="RD_NO" />
+                <ScalarProperty Name="CrashDate" ColumnName="CrashDate" />
+                <ScalarProperty Name="PrimeContributingCause" ColumnName="PrimeContributingCause" />
+                <ScalarProperty Name="MostSevereInjury" ColumnName="MostSevereInjury" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CrashReportPeoples">
+            <EntityTypeMapping TypeName="ChicagoTrafficModel.CrashReportPeople">
+              <MappingFragment StoreEntitySet="CrashReportPeople">
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="RD_NO" ColumnName="RD_NO" />
+                <ScalarProperty Name="PersonType" ColumnName="PersonType" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
